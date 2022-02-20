@@ -1,0 +1,8 @@
+com/mycompany/state_pattern/HasQuarter.class
+com/mycompany/state_pattern/State.class
+com/mycompany/state_pattern/NoGumball.class
+com/mycompany/state_pattern/NoQuarter.class
+com/mycompany/state_pattern/GumballMaschine.class
+com/mycompany/state_pattern/NewMain.class
+com/mycompany/state_pattern/OutOfBalls.class
+com/mycompany/state_pattern/GumballSold.class

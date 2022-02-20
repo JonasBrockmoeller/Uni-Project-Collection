@@ -1,0 +1,9 @@
+com/mycompany/adapter_pattern/DroneAdapter.class
+com/mycompany/adapter_pattern/SuperDrone.class
+com/mycompany/adapter_pattern/Turkey.class
+com/mycompany/adapter_pattern/TurkeyAdapter.class
+com/mycompany/adapter_pattern/Duck.class
+com/mycompany/adapter_pattern/WildTurkey.class
+com/mycompany/adapter_pattern/Mallard.class
+com/mycompany/adapter_pattern/Drone.class
+com/mycompany/adapter_pattern/DuckSimulator.class
