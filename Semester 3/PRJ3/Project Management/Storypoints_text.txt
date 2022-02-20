@@ -1,0 +1,16 @@
+Story Points
+
+Sprint 1:
+12 + 20 = 32
+
+Sprint 2:
+30 +30 = 60
+
+Sprint 3:
+8 + 40 = 48
+
+Sprint 4:
+50 + 13 = 63
+
+Sprint 5:
+20 + 30 = 50
