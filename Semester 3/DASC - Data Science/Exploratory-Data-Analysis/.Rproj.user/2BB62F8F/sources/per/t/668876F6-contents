@@ -1,0 +1,62 @@
+---
+title: "ElectricVehiclesDataAnalysis"
+author: "Mino Karadzhov"
+date: "10/18/2021"
+output: html_document
+---
+
+## Setup
+```{r}
+evData <- read.csv("../Dataset/ElectricCarData_Clean_Me.csv")
+library(tidyverse)
+```
+```{r}
+evData
+```
+
+# Do Vehicles with RapidCharge Accelerate different than the ones without ?
+### It appears they actually do! Unforntunately we do not have data on the weight of the vehicle, otherwise we could've investigated futher.
+```{r}
+evData %>%
+ggplot(mapping = aes(x = RapidCharge, y = AccelSec)) +
+  geom_boxplot()
+```
+```{r}
+mean_RapidChargeAccel <- evData %>%
+  filter(RapidCharge == "Yes") %>%
+  mean(AccelSec)
+```
+```{r}
+mean_nonRapidChargeAccel <- evData %>%
+  filter(RapidCharge == "No") %>%
+  mean(AccelSec)
+```
+
+
+
+##What is the number of RapidCharge Vehicles?
+### It appears that the vast majority of Vehicles have RapidCharge. Could it be that we are getting the data above, simply because there are more datapoints in one of the sub-categories?
+```{r}
+evData %>%
+  ggplot(mapping = aes(x = RapidCharge)) +
+  geom_bar()
+```
+#Do vehicles with certain plug type have the highest range?
+```{r}
+evData %>%
+  ggplot(mapping = aes(x= PlugType, y = Range_Km)) +
+  geom_point() + geom_smooth()
+```
+# Do vehicles with certain powertrain accelerate faster?
+```{r}
+evData %>%
+  ggplot(mapping = aes(x = PowerTrain, y = AccelSec)) +
+  geom_boxplot()
+```
+##What is the distribution of this categorical variable?
+```{r}
+evData %>%
+  ggplot(mapping = aes(x=PowerTrain)) +
+  geom_bar()
+```
+##Does the type of Vehicle

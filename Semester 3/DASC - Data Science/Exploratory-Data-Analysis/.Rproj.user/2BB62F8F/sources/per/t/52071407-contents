@@ -1,0 +1,152 @@
+---
+title: "ElectricVehiclesEDA"
+author: "Mino Karadzhov, Jonas Brockmoller"
+date: "11/10/2021"
+output: html_document
+---
+
+# Electric Vehicles Exploratory Data Analysis
+
+### Note to the reader:
+#### Distances in the following analysis are in Km(Kilometres) and monetary variables, such as the price, are in Euro(EUR).
+```{r}
+library(tidyverse)
+evData <- read_csv("/Users/jonasbrockmoller/Documents/GitHub/ElectricVehiclesEDA/Dataset/ElectricCarData_Clean_Me.csv")
+```
+
+##Distribution of Variables.
+In this first part of the Exploratory Data Analysis, we will analyse the distribution of different variables, within the dataset. Our main tool for conducting this are the questions that follow.
+
+
+### What is the number of different car models, present in the Dataset?
+
+```{r}
+evData %>%
+  summarize(numberOfDifferentCarModels = n())
+```
+From the Tabular view above, we have an indication that 102 different car models are present within the dataset, that we are going to Analyse.
+
+### Which is the fifth most-observed brands in our Dataset?
+```{r}
+evData %>%
+  group_by(Brand) %>%
+  mutate(count = n()) %>%
+  filter(count > 5) %>%
+  ggplot(mapping = aes(x=Brand)) +
+  geom_bar()
+```
+From the diagram above we can easily see the five most-observed car brands in the dataset. In addition to this, we can easily distinguish that Tesla is the brand with most electric models that are observed within the data. In the tabular view above, the reader can see the exact number of models observed for each one of the fifth brands.
+
+
+### What is the exact number of observations(models) of the fifth most-observed brands ?
+```{r}
+evData %>% 
+  group_by(Brand) %>%
+  summarize(numberOfObservations = n()) %>%
+  filter(numberOfObservations > 5) %>%
+  arrange(desc(numberOfObservations))
+```
+
+From the above tabular view, we can easily see that the most-observed brand, Tesla has 13 models present in the dataset. The same is being closely followed by Audi with 9 and Nissan with just one less than the former.
+
+### What is the ratio of vehicles that are equiped with RapidCharge?
+```{r}
+evData %>%
+  ggplot(mapping = aes(x=RapidCharge)) +
+  geom_bar()
+```
+From the above barchart, we can easily observe that the majority of electric vehicles in the dataset are equipped with RapidCharge.
+
+### What is the exact number of vehicles that are equipped with RapidCharge?
+```{r}
+evData %>%
+  filter(RapidCharge == "Yes") %>%
+  summarize(vehiclesWithRapidCharge = n())
+```
+### What is the most-common Powertrain, within the different models?
+```{r}
+evData %>%
+  ggplot(mapping = aes(x = PowerTrain)) +
+  geom_bar()
+```
+TODO: Write a small summary
+
+### What is the most common vehicle bodystyle? 
+```{r}
+evData %>%
+  ggplot(mapping = aes(x=BodyStyle)) +
+  geom_bar()
+```
+TODO: Write a short summary
+
+### What is the most-common number of seats, within a vehicle?
+```{r}
+evData %>%
+  ggplot(mapping = aes(x= Seats)) +
+  geom_bar()
+```
+TODO: Write a short summary
+
+### What is the mean price?
+```{r}
+evData %>%
+  summarize(meanPrice = mean(PriceEuro))
+```
+TODO: Write a short summary.
+
+### What is the most-common plugtype?
+```{r}
+evData %>%
+  ggplot(mapping = aes(x=PlugType)) +
+  geom_bar()
+```
+It appears that Type 2CCS is the most-common plugtype.
+
+### What is the mean 0-100 km/h acceleration?
+```{r}
+evData %>%
+  summarize(MeanAccelSec = mean(AccelSec))
+```
+
+### What is the Mean top speed in km/h?
+```{r}
+evData %>%
+  summarize(MeanTopSpeed = mean(TopSpeed_KmH))
+```
+
+### What is the mean range?
+```{r}
+evData %>%
+  summarize(MeanRange = mean(Range_Km))
+```
+
+## Analysing the Co-variations between variables
+
+### How does the mean range vary, between the different bodystyles?
+
+
+```{r}
+evData %>%
+  ggplot(mapping=aes(x=BodyStyle, y = Range_Km)) +
+  geom_boxplot()
+```
+### How does the Battery Pack size affect the range ?
+```{r}
+evData %>%
+  ggplot(mapping = aes(x=Battery_Pack_Kwh, y = Range_Km)) +
+  geom_point() + geom_smooth()
+```
+### What is the covariation between 0-100 Acceleration and the bodystyle of a vehicle?
+```{r}
+evData %>%
+  ggplot(mapping = aes(x=BodyStyle, y = AccelSec)) +
+  geom_boxplot()
+```
+```{r}
+evData %>%
+  filter(BodyStyle == "SPV")
+```
+### Are certain powertrains more commonnly implemented within some bodystyle?
+```{r}
+```
+

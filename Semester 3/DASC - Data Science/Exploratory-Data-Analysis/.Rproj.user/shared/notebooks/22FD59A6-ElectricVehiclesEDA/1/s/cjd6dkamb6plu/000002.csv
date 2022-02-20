@@ -1,0 +1,5 @@
+"0","evData %>%"
+"0","  summarize(numberOfDifferentCarModels = n())"
+"2","Error in summarize(., numberOfDifferentCarModels = n()) : 
+  object 'evData' not found
+"

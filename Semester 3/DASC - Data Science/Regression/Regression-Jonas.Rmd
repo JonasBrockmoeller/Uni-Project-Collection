@@ -1,0 +1,151 @@
+---
+title: "Regression-Jonas"
+output: html_document
+---
+This is the second part of this DASC assignment. In contrast to the exploratory data analysis is this regression done individually. 
+In the following I will walk you through a simple linear regression, followed by a more advanced curvilinear regression.
+
+# Introduction
+The goal of a regression is to measure the relationship of 2 (or more) variables. It will be a challenge to find a graph the can fit the data points in our data set as good as possible without over- or underfitting. For my regression I decided to investigate the relationship of the Battery size to the range in kilometers. It is to be expected that I am going to try and prove my hypothesis that the bigger the battery is, the more kilometers the car can drive. The plan is to start simple by investigating the relationship of only 2 variable first, but it leaves the opportunity open to add more variables in the process.
+
+The first step is to import the data and essential libraries for this script:
+```{r}
+# install.packages("tidyverse")
+# install.packages("gghighlight")
+# install.packages("plyr")
+
+library(tidyverse)
+library(gghighlight)
+library(plyr)
+```
+
+```{r}
+ev <- read_csv("ElectricCarData.csv")
+ev
+```
+Above is the imported data shown contain information about all announced and released fully electric vehicles for the European and American market. In the following I am going to investigate the hypothesis about the relationship between the battery size and the range. In this dataset the battery size is given in KwH and the range is of type kilometers.
+
+## 1. Showing variables in a scatter plot (independent variable X = BatteryPack_size, depended variables Y = Range in km)
+The following scatterplot shows the outliers in the dataset and the tibble will give additional details about these outliers:
+```{r}
+  # Show outliers in the data in a scatter plot
+  ggplot(ev, aes(x=Battery_Pack_Kwh, y=Range_Km)) + geom_point() + gghighlight(Battery_Pack_Kwh > 100)
+
+  # Show outliers in the data in form of a tibble
+  outliers <- ev %>% filter(Battery_Pack_Kwh > 100)
+  
+  # Filter the undesired columns to only show a tible with relevant information
+  undesiredColumns <- c('Segment', 'Seats', 'PlugType', 'PowerTrain', 'RapidCharge',   'FastCharge_KmH', 'Efficiency_WhKm',                'TopSpeed_KmH', 'AccelSec', 'PlugType')
+  outliers <- outliers %>% select(-one_of(undesiredColumns))
+  
+  # Show the cleaned tibble
+  outliers
+```  
+As it can be seen above the outliers are either supercars that cost more than 100000€ or it is a version of the announced but not yet released Tesla Cybertruck. The Cybertruck will be equipped with a new type of battery and up to 200 KwH of capacity. These numbers are exceptional and would only make the result of this regression inaccurate, so they are left out.
+
+```{r}
+  #Filter out exceptional data
+  ev <- ev %>% filter(Battery_Pack_Kwh < 100) 
+  ev <- ev %>% filter(Range_Km < 550)
+  ev <- ev %>% filter(Range_Km != 250)
+  
+  #Show a scatter plot with the cleaned dataset
+  ggplot(ev, aes(x=Battery_Pack_Kwh, y=Range_Km)) + geom_point()
+```
+
+In this first step the relationship of the X-variable (BatteryPackSize) and the Y-Variable(Range in km) is presented based on the cleaned data. In addition the outliers have been found, investigated and removed.
+
+## 2. Calculating and visualizing the regression model
+In the following the regression line will be visualized and a model is calculated. 
+```{r}
+  # Simple linear regression line on the scatter plot
+  ggplot(ev, aes(x=Battery_Pack_Kwh, y=Range_Km)) + geom_point() + geom_smooth(method='lm', formula= y~x)
+  
+  # Calculate simple regression model
+  model <- lm(Range_Km ~ Battery_Pack_Kwh, data = ev)
+  summary(model)
+```
+#### 4.1 Simple linear model analysis
+Shown above is the simple linear regression model. I feel inclined to say that the regression model is showing a kind of strong relationship between the 2 variables. #this means the distance from the blue line to the data points is mostly short. 
+
+####  Residual analysis
+* Residuals are essentially the difference between the actual value and the prediced value of the regression model. The residual section contains 5 values. A symmetrical distribution would be an indicator to answer how well the model fits the data. In this case the distribution of the residuals does appear to be somewhat symmetrical because the median is at 5.135. This means the model is slightly left-skewed. This tells us that our model is not predicting as well at the lower ranges as it does for the higher. 
+This came as a surprise to me, because when looking at the diagram I got the feeling that the upper range is less well represented. 
+
+#### Coefficient analysis
+* The extremely low p-value (< 2e-16) is marked with *** which is the best possible case. In this test the Null-Hypothesis is being investigated. In this case the Null-Hypothesis is that the battery pack size does NOT have a relationship with the range of an electric vehicle. Because of the perfect p-value the Null-Hypothesis can be discarded in this regression model.
+
+* The Estimate value for the Intercept is a bit of nonsense in this example because it means that an ev with a batterypack size of 0 has a range of 74.433 kilometers.
+
+* The Estimate value for the batterypack size variable on the other hand is representing a very important part of a linear model. The 3.9989 describe the slope of the graph. That means on average the model predicts per 1 KwH larger batterypack size an electric vehicle can go 3.99 km more.
+
+* From a mathematical standpoint looking at the formular for linear graphs f(x) = mx + b, then is the "m" described by the estimate for the batterypack size and the "b" is equal to the estimate value of the intercept.
+
+* The standard error of the Battery pack size is at 0.2022. This means that the previously established slope of the model with 3.9989 can deviate by 0.2022. In other words, it can be said that the range per added KwH of battery capacity vary by 0.2022 kilometers.
+
+* The t-value has to be as far away from 0 as possible. In this case it is relatively far away from zero with 19.776. This indicates that the Null-Hypothesis can be rejected and a relationship between range and battery capacity exists.
+
+#### Review of additional values
+* Residual standard error is an indicator of the quality of the linear model fit and in this case it is at 41.96. It simply describes the average amount that the data points deviate from the true regression line. 41.96 is not the best case but still in a acceptable distance.
+
+* For this regression 98 data points and two parameters (intercept and slope) were used. The degrees of freedom means that 88 out of the 98 data points went into the calculation and estimation of the parameters.
+
+* The Multiple R-squared value is at 81.63% which is a great result and means that this regression model can explain 81.63% of the given data set. This model is by far not under-fitting the data. If anything it is close to over-fitting the data.
+
+```{r}
+ par(mfrow=c(2,2))
+ plot(model)
+```
+
+Above are 4 plots of the simple linear regression model. Even though it has been made clear in the previous paragraph that this model still has issues and that there is room for improvement I want to go over the result and explain where the issues are and how they can be improved in later versions of the model:
+
+* The residuals vs. Fitted plots red line should be close to the perfect dotted grey line. But in this regression model it hints to an undiscovered curvilinear relationship, because the graph proceeds in a curve. Most likely this indicates a hidden quadratic relationship.
+
+* The Normal Q-Q Graph shows good results for the regression. Only small deviations are visible in the lower end of this model. This was already discovered at the review of the Residuals and only underlines the statement from above.
+
+* The scale vs Location graph also hints at an undiscovered quadratic relationship, because of the curvilinear behavior of the red line.
+  
+  
+# Improved regression model
+  
+From the ggplot above I can see that the simple linear model does fit the data perfectly, but a curvilinear, especially a quadratic method could be an even better fit for the given data:
+  
+```{r}
+  # Scatterplot with a quadratic geom smooth line
+  ggplot(ev, aes(x=Battery_Pack_Kwh, y=Range_Km)) + geom_point() + geom_smooth(method='auto', formula= y~x)
+```
+
+The scatter plot above is based on the same dataset as before, but the regression line has been modified. I assume the relatioship is not of the simple linear type, but more of a quadratic relationship.
+
+```{r}
+  cor(ev$Battery_Pack_Kwh, I(ev$Battery_Pack_Kwh^2))
+```
+This command checks for correlation of 2 variables, because multivariate models make the assumption that all values are independent from each other. This means we have a structural correlation type here. Because of this the data cannot be read afterwards from the model. But the model can still fit the data very well. It makes it just hard to analyse the model.
+
+```{r}
+  # Regression model for a quadratic relationship
+  modelSqared <- lm(Range_Km ~ Battery_Pack_Kwh + I(Battery_Pack_Kwh^2), data = ev)
+
+  summary(modelSqared)
+  
+  par(mfrow=c(2,2))
+  plot(modelSqared)
+```
+
+Because the this model is a multiple linear regression model the results cannot be interpreted anymore. This is the reason that the model results can only be compared on the numbers but not on the meaning:
+
+* In the Residual vs. Fitted plot can be seen big improvement. As expected, the curve has disappeared and now the red line proceeds very close to the optimal dotted line.
+
+* The Normal Q-Q graph has also improved in the lower range, but because of the quadratic modelling to upper range is now less well modeled. 
+
+* The estimate value for the intercept is still a bit of nonsense but its still better than the simple linear model. This quadratic model calculated -66.69 km of range when the battery capacity is at 0 %. This kind of makes sense, because every ev needs a battery size of at least a couple of KwH to able to drive for short ranges. This is much more realistic in this model, even though it still not perfect.
+
+# Which model is better?
+
+```{r}
+anova(model, modelSqared)
+```
+Because the result above is greater than 0.05 the squared model is not significantly better at capturing the data than the simpler model according to the anova test.
+
+# Consclusion
+The hypothesis was proven correct, and the data shows that the battery capacity is related to the range of electric vehicles. Even though the anova test does not support this, I believe that the data is fitted best by a curvilinear model. Also my main critics of the simple linear model were much improved with the quadratic model. This also mkaes me believe that the curvilinear model is the best fit for the given data.

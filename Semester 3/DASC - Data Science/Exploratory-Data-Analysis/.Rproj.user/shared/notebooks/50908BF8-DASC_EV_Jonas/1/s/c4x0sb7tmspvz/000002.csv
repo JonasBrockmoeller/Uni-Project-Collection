@@ -1,0 +1,5 @@
+"0","ev2 <- ev %>% filter(BodyStyle != ""SPV"")"
+"0","ev2 <- ev2 %>% filter(BodyStyle != ""Station"")"
+"0","filter(BodyStyle != ""MPV"")"
+"2","Error in filter(BodyStyle != ""MPV"") : object 'BodyStyle' not found
+"

@@ -1,0 +1,144 @@
+---
+title: "EV"
+output: html_document
+---
+### https://www.r-graph-gallery.com
+```{r}
+library(tidyverse)
+ev <- read_csv("/Users/jonasbrockmoller/Documents/GitHub/ElectricVehiclesEDA/Dataset/ElectricCarData_Clean_Me.csv")
+ev
+```
+
+### 1. Does the battery pack size affect the fast charging rates of evs?
+```{r}
+ev2 <- ev %>% filter(BodyStyle != "SPV")
+ev2 <- ev2 %>% filter(BodyStyle != "Station")
+ev2 <- ev2 %>% filter(BodyStyle != "MPV")
+ev2 <- ev2 %>% filter(Battery_Pack_Kwh <= 100)
+
+
+
+ggplot(ev2, aes(x=Battery_Pack_Kwh, y=FastCharge_KmH)) +
+geom_point() +
+geom_smooth()
+
+
+
+ggplot(ev2, aes(x=Battery_Pack_Kwh, y=FastCharge_KmH, color=BodyStyle, group = BodyStyle)) +
+geom_point()
+
+ggplot(ev2, aes(x=Battery_Pack_Kwh, y=FastCharge_KmH)) +
+geom_point() +
+  facet_wrap(vars(BodyStyle))
+```
+
+### 2. Which company produces the on average longest range vehicles?
+```{r}
+ev2 <- ev %>% filter(BodyStyle != "SPV")
+ev2 <- ev2 %>% filter(BodyStyle != "Station")
+ev2 <- ev2 %>% filter(BodyStyle != "MPV")
+ev2 <- ev2 %>% filter(Range_Km <= 500)
+
+
+
+data_histogram <- ev2 %>%
+mutate(Brand = factor(Brand)) %>%
+group_by(Brand) %>%
+summarize(mean_range = round(mean(Range_Km), 2))
+
+
+
+ggplot(data_histogram, aes(x = Brand, y = mean_range)) +
+geom_bar(stat = "identity") +
+geom_text(aes(label = mean_range),
+hjust = 1.5,
+color = "white",
+size = 3) +
+theme_classic() +
+coord_flip() +
+xlab("Brand") + ylab("average range")
+```
+
+### 3. How does the efficiency of the car affect the 0-100 acceleration times?
+```{r}
+ggplot(ev, aes(x=Efficiency_WhKm, y=AccelSec)) +
+geom_point() +
+geom_smooth()
+
+
+
+ggplot(ev, aes(x=Efficiency_WhKm, y=AccelSec, color=BodyStyle, group = BodyStyle)) +
+geom_point()
+
+ggplot(ev, aes(x=Efficiency_WhKm, y=AccelSec)) +
+geom_point() +
+facet_wrap(vars(BodyStyle))
+
+
+ev2 <- ev %>% filter(BodyStyle != "SPV")
+ev2 <- ev2 %>% filter(BodyStyle != "Station")
+ev2 <- ev2 %>% filter(BodyStyle != "MPV")
+ggplot(ev2, aes(x=Efficiency_WhKm, y=AccelSec, color=BodyStyle, group = BodyStyle)) +
+geom_boxplot()
+```
+
+### 4. Do all cars with a range above the average have the ability to fast charge?
+```{r}
+ggplot(ev, aes(x=PriceEuro, y=Range_Km, color = RapidCharge)) +
+geom_point() +
+geom_line(data=ev, aes(PriceEuro, mean(ev$Range_Km)))
+```
+
+### 5. Does the battery pack size have a negative impact on efficiency?
+```{r}
+ev2 <- ev %>% filter(BodyStyle != "SPV")
+ev2 <- ev2 %>% filter(BodyStyle != "Station")
+ev2 <- ev2 %>% filter(BodyStyle != "MPV")
+ev2 <- ev2 %>% filter(Battery_Pack_Kwh <= 100)
+
+
+
+ggplot(ev2, aes(x=Battery_Pack_Kwh, y=Efficiency_WhKm)) +
+geom_point() +
+geom_smooth()
+
+
+
+ggplot(ev2, aes(x=Battery_Pack_Kwh, y=Efficiency_WhKm, color=BodyStyle, group = BodyStyle)) +
+geom_point()
+
+ggplot(ev2, aes(x=Battery_Pack_Kwh, y=Efficiency_WhKm)) +
+geom_point() + 
+facet_wrap(vars(BodyStyle))
+
+```
+
+### 6. Does the body style affect the range of the vehicle?
+```{r}
+library(ggplot2)
+library(ggExtra)
+
+
+
+ev2 <- ev %>% filter(BodyStyle != "SPV")
+ev2 <- ev2 %>% filter(BodyStyle != "Station")
+ev2 <- ev2 %>% filter(BodyStyle != "MPV")
+
+ggplot(ev2, aes(x=as.factor(BodyStyle), y=Range_Km)) +
+geom_boxplot(fill="slateblue", alpha=0.2) +
+xlab("BodyStyle")
+
+### battery pack size relevant here
+ggplot(ev2, aes(x=as.factor(BodyStyle), y=Battery_Pack_Kwh)) +
+geom_boxplot(fill="slateblue", alpha=0.2) +
+xlab("BodyStyle")
+```
+
+### 7. What body type are the quickest accelerating cars?
+```{r}
+ev2 <- ev %>% filter(BodyStyle != "SPV")
+ev2 <- ev2 %>% filter(BodyStyle != "Station")
+ev2 <- ev2 %>% filter(BodyStyle != "MPV")
+ggplot(ev2, aes(x=AccelSec, y=BodyStyle)) +
+geom_boxplot()
+```

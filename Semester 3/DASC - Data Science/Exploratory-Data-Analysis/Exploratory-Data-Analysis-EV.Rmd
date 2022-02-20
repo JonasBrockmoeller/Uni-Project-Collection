@@ -1,0 +1,191 @@
+---
+title: "Exploratory-Data-Analysis-EV"
+output: html_document
+# author: "Mino Karadzhov", "Jonas Brockmöller"
+# date: "14/01/2022"
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Electric Vehicels Exploratory Data Analysis.
+## Written by Mino Karadzhov and Jonas Brockmöller
+
+The following document presents the results of an Exploratory Data Analysis conducted on Electric Vehicles Dataset. Data within the dataset has been manually collected and the same can be found on the following address : https://www.kaggle.com/geoffnel/evs-one-electric-vehicle-dataset?select=ElectricCarData_Clean.csv.
+The underlying dataset contains technical specification about the vehicles and their price in Germany(before tax incentives).
+
+### Note to the reader:
+#### Distances in the following analysis are always in Km(Kilometres) and monetary variables, such as the price, are in Euro(EUR).
+
+## Importing libraries and the dataset
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(ggExtra)
+ev <- read_csv("ElectricCarData.csv")
+```
+## Overall Summary of the Data
+```{r}
+summary(ev)
+```
+
+The above summary provides us with a general overview of our data. This is helpful, as the overall view gives us useful information about the different variables and observations. The same can be useful, when determining the variables of interest for our analysis.
+
+ 
+##Distribution of Variables.
+In this part of the Exploratory Data Analysis, we will analyze the distribution of different variables, within the data This may be helpful for identifying certain patterns, which could be worth analysing further.
+One of our main tools for conducting this are the questions that follow.
+
+### Which are the fifth most-observed car brands in our data?
+```{r}
+fiveCommonBrands <- ev %>% 
+  group_by(Brand)%>%
+  summarize(numberOfModels = n()) %>% 
+  arrange(desc(numberOfModels)) %>%
+  head(5) %>%
+  print()
+```
+
+From the above tabular view, we can gain insights, regarding how much models are represented per each car brand. After arranging the same in a descending order, we can see the five brands that have the biggest number of models in the dataset. The same will have the following view on a plot:
+
+```{r}
+fiveCommonBrands %>% 
+  ggplot(mapping = aes(reorder(Brand, -numberOfModels), numberOfModels)) +
+  geom_bar(stat = "summary", fun.y = "mean") +
+  ggtitle("Five most-common car brands in the data")
+```
+
+From the above diagram, we can easily distinguish Tesla as the most-common brand in the dataset, followed by Audi.
+
+### What is the most common vehicle bodystyle? 
+```{r}
+ev %>%
+  ggplot(mapping = aes(x=BodyStyle)) +
+  geom_bar()
+```
+
+As it can be seen above a electric model for exists for every bodytype. Although it seems obvious that the SUV and hatchback style is the most common. The reason for the success of electric hatchbacks could be related to the efficiency and / or the price, which will be investigated later.
+
+### What is the most-common plugtype?
+```{r}
+ev %>%
+  ggplot(mapping = aes(x=PlugType)) +
+  geom_bar()
+```
+
+From theoretical knowledge, we are aware that the Type 2 CSS plug is standard equipment in the EU so it is no surprise that this plugtype is by far the most common one.
+
+##What is the ratio of vehicles that is equipped with RapidCharge?
+From theoretical knowledge, we are aware that the time required for charging an electric vehicle is quite important. This is due to the fact that the same can be a determining factor of weather one can use their vehicle. From consumer's point of view, we can make a vague suggestion that car brands would have interest of including the RapidCharge option into their vehicles.
+```{r}
+  ggplot(ev, aes(x = RapidCharge)) +
+  geom_bar()
+```
+
+It appears that the vast majority of Vehicles do have RapidCharge.
+
+## Analysing the Co-variations between variables
+After analysing the internal variations within some of the variables in our dataset, we can move on to analysing the covariations between certain variables. This will allows us to identify patterns and accept or reject certain hypothesis.
+
+# Do Vehicles with RapidCharge Accelerate different than the ones without ?
+From theoretical knowledge, we may expect RapidCharge vehicles to be heavier, compared to the same models without the RapidCharge option. This is due to the fact that RapidCharge requires an additonal set of equipment within the vehicle. From Newton's second law of motion, we know that there is a positive correlation between the weight of an object and the required force for moving it. Taken this into account, in addition to the fact that the observed models have engines that are capable of producing different amounts of power and the fact that we are not aware of the weight of each vehicle model, we can make an inexact suggestion that vehicles with RapidCharge may show a different behaviour within the Acceleration 0-100 km/h
+```{r}
+ggplot(ev, aes(x = RapidCharge, y = AccelSec)) +
+  geom_boxplot()
+```
+
+It appears they actually do! Unforntunately we do not have data on the weight of the vehicle, otherwise we could have investigated futher here. We also need to take into account the fact that the number of vehicles without RapidCharge is much lower than the other group.
+
+### How does the Battery Pack size affect the range ?
+From the concept of inertia, described in Newton's first law of motion, we are aware that an external force is required in order to transform a body from a state of rest to a state of motion and to sustain the latter. From additional theoretical knowledge, we are aware that the resource required to produce the force to move the vehicle's body in our case is chemical energy, stored within the battery. The latter transforms the chemical energy into electrical such. The capacity of a battery,describes the amount of electrical energy that can be generated from the electrochemical reactions within it. 
+Furthermore, we are aware that the different vehicle models in our underlying dataset are equipped with Batteries of different sizes. Taken this and the above into account, we can make the assumption that vehicles with larger battery packs are capable of covering longer distances, compared to the ones equipped with smaller batteries. 
+```{r}
+  ggplot(ev, aes(x=Battery_Pack_Kwh, y = Range_Km)) +
+  geom_point() +
+  geom_smooth()
+```
+
+Indeed, we can clearly see a positive correlation between the two variables, which means that our assumption can be taken as a valid one. However, it is worth taking into account the fact that there is a high chance that the observed vehicles differ in weight.
+
+### Do vehicles with certain powertrain accelerate faster? - there is some interest here
+```{r}
+  ggplot(ev, aes(x = PowerTrain, y = AccelSec)) +
+  geom_boxplot()
+```
+
+## Analysing questions that came up during the Exploratory Data Analysis
+
+### 1. Does the battery pack size affect the fast charging rates of evs?
+```{r}
+ev2 <- ev %>% filter(BodyStyle != "SPV")
+ev2 <- ev2 %>% filter(BodyStyle != "Station")
+ev2 <- ev2 %>% filter(BodyStyle != "MPV")
+ev2 <- ev2 %>% filter(Battery_Pack_Kwh <= 100)
+
+ggplot(ev2, aes(x=Battery_Pack_Kwh, y=FastCharge_KmH)) +
+geom_point() +
+geom_smooth(method='lm')
+```
+
+The graphs above show that the fast charging rate is affected by the battery pack size. The bigger the battery is, the faster is the cars peak charging rate.
+
+### 2. Which company produces the on average longest range vehicles?
+```{r}
+data_histogram <- ev %>%
+mutate(Brand = factor(Brand)) %>%
+group_by(Brand) %>%
+summarize(mean_range = round(mean(Range_Km), 2))
+
+ggplot(data_histogram, aes(x = Brand, y = mean_range)) +
+geom_bar(stat = "identity") +
+geom_text(aes(label = mean_range),
+hjust = 1.5,
+color = "white",
+size = 3) +
+theme_classic() +
+coord_flip() +
+xlab("Brand") + ylab("average range")
+```
+
+The histogram above shows that Lucid produces the cars with the longest average range with 610 km, followed by Lightyear (575km), Tesla (501 km) and Cupra (425 km). Smart has the cars with the on average shortest range with 96.67 km.
+
+### 3. How does the efficiency of the car affect the 0-100 acceleration times?
+```{r}
+ggplot(ev, aes(x=Efficiency_WhKm, y=AccelSec)) +
+geom_point() +
+geom_smooth()
+
+# ggplot(ev, aes(x=Efficiency_WhKm, y=AccelSec)) +
+# geom_point() +
+# facet_wrap(vars(BodyStyle))
+```
+
+As it can be seen above it can generally be said that that the less efficient a car is, the faster it can accelerate. Which makes sense, sports cars are quick but the driver cares less about efficiency and on the other hand the efficient cars are not made to keep up with a sports car.
+
+### 4. Do all cars with a range above the average have the ability to fast charge?
+```{r}
+ggplot(ev, aes(x=PriceEuro, y=Range_Km, color = RapidCharge)) +
+geom_point() +
+geom_line(data=ev, aes(PriceEuro, mean(ev$Range_Km)))
+```
+
+The scatter plot clearly shows that no car with a range above the average supports fast charging.
+
+### 5. Does the battery pack size have a negative impact on efficiency?
+```{r}
+ev2 <- ev %>% filter(BodyStyle != "SPV")
+ev2 <- ev2 %>% filter(BodyStyle != "Station")
+ev2 <- ev2 %>% filter(BodyStyle != "MPV")
+ev2 <- ev2 %>% filter(Battery_Pack_Kwh <= 100)
+
+ggplot(ev2, aes(x=Battery_Pack_Kwh, y=Efficiency_WhKm)) +
+geom_point() +
+geom_smooth()
+
+ggplot(ev2, aes(x=Battery_Pack_Kwh, y=Efficiency_WhKm)) +
+geom_point() + 
+facet_wrap(vars(BodyStyle))
+```
+
+The line in the scatter plot shows a clear trend, that the bigger the battery is, the less efficient the car drives. It gets even more interesting when looking at the results per Bodystyle. This graph also supports the theory that the bigger the battery is the more power the car consumes while driving, but it is also visible that especially the SUV style is very efficient. This most likely comes from its less aerodynamic shape. 

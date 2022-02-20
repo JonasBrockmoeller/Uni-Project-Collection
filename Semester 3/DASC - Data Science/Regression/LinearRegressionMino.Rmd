@@ -1,0 +1,15 @@
+---
+title: "LinearRegressionMino"
+author: "Mino Karadzhov"
+date: "1/11/2022"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+model <- lm()
+```
+

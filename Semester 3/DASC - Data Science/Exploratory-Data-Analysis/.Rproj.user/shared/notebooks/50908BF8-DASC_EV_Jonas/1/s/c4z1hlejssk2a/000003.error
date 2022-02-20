@@ -1,0 +1,1 @@
+{"frames":[{"func":"ev %>% filter(BodyStyle != \"SPV\")","file":"","line_number":0,"end_line_number":0,"character_number":0,"end_character_number":0},{"func":"filter(., BodyStyle != \"SPV\")","file":"","line_number":0,"end_line_number":0,"character_number":0,"end_character_number":0}],"message":"Error in filter(., BodyStyle != \"SPV\") : object 'ev' not found\n"}

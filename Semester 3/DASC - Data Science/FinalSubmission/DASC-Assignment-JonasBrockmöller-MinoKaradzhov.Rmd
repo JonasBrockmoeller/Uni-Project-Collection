@@ -1,0 +1,339 @@
+---
+title: "DASC-Assignment-JonasBrockmöller-MinoKaradzhov"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Electric Vehicels Exploratory Data Analysis.
+## Written by Mino Karadzhov and Jonas Brockmöller
+
+The following document presents the results of an Exploratory Data Analysis conducted on Electric Vehicles Dataset. Data within the dataset has been manually collected and the same can be found on the following address : https://www.kaggle.com/geoffnel/evs-one-electric-vehicle-dataset?select=ElectricCarData_Clean.csv.
+The underlying dataset contains technical specification about the vehicles and their price in Germany(before tax incentives).
+
+### Note to the reader:
+#### Distances in the following analysis are always in Km(Kilometres) and monetary variables, such as the price, are in Euro(EUR).
+
+## Importing libraries and the dataset
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(ggExtra)
+ev <- read_csv("ElectricCarData.csv")
+```
+## Overall Summary of the Data
+```{r}
+summary(ev)
+```
+
+The above summary provides us with a general overview of our data. This is helpful, as the overall view gives us useful information about the different variables and observations. The same can be useful, when determining the variables of interest for our analysis.
+
+ 
+##Distribution of Variables.
+In this part of the Exploratory Data Analysis, we will analyze the distribution of different variables, within the data This may be helpful for identifying certain patterns, which could be worth analysing further.
+One of our main tools for conducting this are the questions that follow.
+
+### Which are the fifth most-observed car brands in our data?
+```{r}
+fiveCommonBrands <- ev %>% 
+  group_by(Brand)%>%
+  summarize(numberOfModels = n()) %>% 
+  arrange(desc(numberOfModels)) %>%
+  head(5) %>%
+  print()
+```
+
+From the above tabular view, we can gain insights, regarding how much models are represented per each car brand. After arranging the same in a descending order, we can see the five brands that have the biggest number of models in the dataset. The same will have the following view on a plot:
+
+```{r}
+fiveCommonBrands %>% 
+  ggplot(mapping = aes(reorder(Brand, -numberOfModels), numberOfModels)) +
+  geom_bar(stat = "summary", fun.y = "mean") +
+  ggtitle("Five most-common car brands in the data")
+```
+
+From the above diagram, we can easily distinguish Tesla as the most-common brand in the dataset, followed by Audi.
+
+### What is the most common vehicle bodystyle? 
+```{r}
+ev %>%
+  ggplot(mapping = aes(x=BodyStyle)) +
+  geom_bar()
+```
+
+As it can be seen above a electric model for exists for every bodytype. Although it seems obvious that the SUV and hatchback style is the most common. The reason for the success of electric hatchbacks could be related to the efficiency and / or the price, which will be investigated later.
+
+### What is the most-common plugtype?
+```{r}
+ev %>%
+  ggplot(mapping = aes(x=PlugType)) +
+  geom_bar()
+```
+
+From theoretical knowledge, we are aware that the Type 2 CSS plug is standard equipment in the EU so it is no surprise that this plugtype is by far the most common one.
+
+##What is the ratio of vehicles that is equipped with RapidCharge?
+From theoretical knowledge, we are aware that the time required for charging an electric vehicle is quite important. This is due to the fact that the same can be a determining factor of weather one can use their vehicle. From consumer's point of view, we can make a vague suggestion that car brands would have interest of including the RapidCharge option into their vehicles.
+```{r}
+  ggplot(ev, aes(x = RapidCharge)) +
+  geom_bar()
+```
+
+It appears that the vast majority of Vehicles do have RapidCharge.
+
+## Analysing the Co-variations between variables
+After analysing the internal variations within some of the variables in our dataset, we can move on to analysing the covariations between certain variables. This will allows us to identify patterns and accept or reject certain hypothesis.
+
+# Do Vehicles with RapidCharge Accelerate different than the ones without ?
+From theoretical knowledge, we may expect RapidCharge vehicles to be heavier, compared to the same models without the RapidCharge option. This is due to the fact that RapidCharge requires an additonal set of equipment within the vehicle. From Newton's second law of motion, we know that there is a positive correlation between the weight of an object and the required force for moving it. Taken this into account, in addition to the fact that the observed models have engines that are capable of producing different amounts of power and the fact that we are not aware of the weight of each vehicle model, we can make an inexact suggestion that vehicles with RapidCharge may show a different behaviour within the Acceleration 0-100 km/h
+```{r}
+ggplot(ev, aes(x = RapidCharge, y = AccelSec)) +
+  geom_boxplot()
+```
+
+It appears they actually do! Unforntunately we do not have data on the weight of the vehicle, otherwise we could have investigated futher here. We also need to take into account the fact that the number of vehicles without RapidCharge is much lower than the other group.
+
+### How does the Battery Pack size affect the range ?
+From the concept of inertia, described in Newton's first law of motion, we are aware that an external force is required in order to transform a body from a state of rest to a state of motion and to sustain the latter. From additional theoretical knowledge, we are aware that the resource required to produce the force to move the vehicle's body in our case is chemical energy, stored within the battery. The latter transforms the chemical energy into electrical such. The capacity of a battery,describes the amount of electrical energy that can be generated from the electrochemical reactions within it. 
+Furthermore, we are aware that the different vehicle models in our underlying dataset are equipped with Batteries of different sizes. Taken this and the above into account, we can make the assumption that vehicles with larger battery packs are capable of covering longer distances, compared to the ones equipped with smaller batteries. 
+```{r}
+  ggplot(ev, aes(x=Battery_Pack_Kwh, y = Range_Km)) +
+  geom_point() +
+  geom_smooth()
+```
+
+Indeed, we can clearly see a positive correlation between the two variables, which means that our assumption can be taken as a valid one. However, it is worth taking into account the fact that there is a high chance that the observed vehicles differ in weight.
+
+### Do vehicles with certain powertrain accelerate faster? - there is some interest here
+```{r}
+  ggplot(ev, aes(x = PowerTrain, y = AccelSec)) +
+  geom_boxplot()
+```
+
+## Analysing questions that came up during the Exploratory Data Analysis
+
+### 1. Does the battery pack size affect the fast charging rates of evs?
+```{r}
+ev2 <- ev %>% filter(BodyStyle != "SPV")
+ev2 <- ev2 %>% filter(BodyStyle != "Station")
+ev2 <- ev2 %>% filter(BodyStyle != "MPV")
+ev2 <- ev2 %>% filter(Battery_Pack_Kwh <= 100)
+
+ggplot(ev2, aes(x=Battery_Pack_Kwh, y=FastCharge_KmH)) +
+geom_point() +
+geom_smooth(method='lm')
+```
+
+The graphs above show that the fast charging rate is affected by the battery pack size. The bigger the battery is, the faster is the cars peak charging rate.
+
+### 2. Which company produces the on average longest range vehicles?
+```{r}
+data_histogram <- ev %>%
+mutate(Brand = factor(Brand)) %>%
+group_by(Brand) %>%
+summarize(mean_range = round(mean(Range_Km), 2))
+
+ggplot(data_histogram, aes(x = Brand, y = mean_range)) +
+geom_bar(stat = "identity") +
+geom_text(aes(label = mean_range),
+hjust = 1.5,
+color = "white",
+size = 3) +
+theme_classic() +
+coord_flip() +
+xlab("Brand") + ylab("average range")
+```
+
+The histogram above shows that Lucid produces the cars with the longest average range with 610 km, followed by Lightyear (575km), Tesla (501 km) and Cupra (425 km). Smart has the cars with the on average shortest range with 96.67 km.
+
+### 3. How does the efficiency of the car affect the 0-100 acceleration times?
+```{r}
+ggplot(ev, aes(x=Efficiency_WhKm, y=AccelSec)) +
+geom_point() +
+geom_smooth()
+
+# ggplot(ev, aes(x=Efficiency_WhKm, y=AccelSec)) +
+# geom_point() +
+# facet_wrap(vars(BodyStyle))
+```
+
+As it can be seen above it can generally be said that that the less efficient a car is, the faster it can accelerate. Which makes sense, sports cars are quick but the driver cares less about efficiency and on the other hand the efficient cars are not made to keep up with a sports car.
+
+### 4. Do all cars with a range above the average have the ability to fast charge?
+```{r}
+ggplot(ev, aes(x=PriceEuro, y=Range_Km, color = RapidCharge)) +
+geom_point() +
+geom_line(data=ev, aes(PriceEuro, mean(ev$Range_Km)))
+```
+
+The scatter plot clearly shows that no car with a range above the average supports fast charging.
+
+### 5. Does the battery pack size have a negative impact on efficiency?
+```{r}
+ev2 <- ev %>% filter(BodyStyle != "SPV")
+ev2 <- ev2 %>% filter(BodyStyle != "Station")
+ev2 <- ev2 %>% filter(BodyStyle != "MPV")
+ev2 <- ev2 %>% filter(Battery_Pack_Kwh <= 100)
+
+ggplot(ev2, aes(x=Battery_Pack_Kwh, y=Efficiency_WhKm)) +
+geom_point() +
+geom_smooth()
+
+ggplot(ev2, aes(x=Battery_Pack_Kwh, y=Efficiency_WhKm)) +
+geom_point() + 
+facet_wrap(vars(BodyStyle))
+```
+
+The line in the scatter plot shows a clear trend, that the bigger the battery is, the less efficient the car drives. It gets even more interesting when looking at the results per Bodystyle. This graph also supports the theory that the bigger the battery is the more power the car consumes while driving, but it is also visible that especially the SUV style is very efficient. This most likely comes from its less aerodynamic shape. 
+
+
+# Regression - Jonas Brockmöller
+This is the second part of this DASC assignment. In contrast to the exploratory data analysis is this regression done individually. 
+In the following I will walk you through a simple linear regression, followed by a more advanced curvilinear regression.
+
+# Introduction
+The goal of a regression is to measure the relationship of 2 (or more) variables. It will be a challenge to find a graph the can fit the data points in our data set as good as possible without over- or underfitting. For my regression I decided to investigate the relationship of the Battery size to the range in kilometers. It is to be expected that I am going to try and prove my hypothesis that the bigger the battery is, the more kilometers the car can drive. The plan is to start simple by investigating the relationship of only 2 variable first, but it leaves the opportunity open to add more variables in the process.
+
+The first step is to import the data and essential libraries for this script:
+```{r}
+# install.packages("tidyverse")
+# install.packages("gghighlight")
+# install.packages("plyr")
+
+library(tidyverse)
+library(gghighlight)
+library(plyr)
+```
+
+```{r}
+ev <- read_csv("ElectricCarData.csv")
+ev
+```
+Above is the imported data shown contain information about all announced and released fully electric vehicles for the European and American market. In the following I am going to investigate the hypothesis about the relationship between the battery size and the range. In this dataset the battery size is given in KwH and the range is of type kilometers.
+
+## 1. Showing variables in a scatter plot (independent variable X = BatteryPack_size, depended variables Y = Range in km)
+The following scatterplot shows the outliers in the dataset and the tibble will give additional details about these outliers:
+```{r}
+  # Show outliers in the data in a scatter plot
+  ggplot(ev, aes(x=Battery_Pack_Kwh, y=Range_Km)) + geom_point() + gghighlight(Battery_Pack_Kwh > 100)
+
+  # Show outliers in the data in form of a tibble
+  outliers <- ev %>% filter(Battery_Pack_Kwh > 100)
+  
+  # Filter the undesired columns to only show a tible with relevant information
+  undesiredColumns <- c('Segment', 'Seats', 'PlugType', 'PowerTrain', 'RapidCharge',   'FastCharge_KmH', 'Efficiency_WhKm',                'TopSpeed_KmH', 'AccelSec', 'PlugType')
+  outliers <- outliers %>% select(-one_of(undesiredColumns))
+  
+  # Show the cleaned tibble
+  outliers
+```  
+As it can be seen above the outliers are either supercars that cost more than 100000€ or it is a version of the announced but not yet released Tesla Cybertruck. The Cybertruck will be equipped with a new type of battery and up to 200 KwH of capacity. These numbers are exceptional and would only make the result of this regression inaccurate, so they are left out.
+
+```{r}
+  #Filter out exceptional data
+  ev <- ev %>% filter(Battery_Pack_Kwh < 100) 
+  ev <- ev %>% filter(Range_Km < 550)
+  ev <- ev %>% filter(Range_Km != 250)
+  
+  #Show a scatter plot with the cleaned dataset
+  ggplot(ev, aes(x=Battery_Pack_Kwh, y=Range_Km)) + geom_point()
+```
+
+In this first step the relationship of the X-variable (BatteryPackSize) and the Y-Variable(Range in km) is presented based on the cleaned data. In addition the outliers have been found, investigated and removed.
+
+## 2. Calculating and visualizing the regression model
+In the following the regression line will be visualized and a model is calculated. 
+```{r}
+  # Simple linear regression line on the scatter plot
+  ggplot(ev, aes(x=Battery_Pack_Kwh, y=Range_Km)) + geom_point() + geom_smooth(method='lm', formula= y~x)
+  
+  # Calculate simple regression model
+  model <- lm(Range_Km ~ Battery_Pack_Kwh, data = ev)
+  summary(model)
+```
+#### 4.1 Simple linear model analysis
+Shown above is the simple linear regression model. I feel inclined to say that the regression model is showing a kind of strong relationship between the 2 variables. #this means the distance from the blue line to the data points is mostly short. 
+
+####  Residual analysis
+* Residuals are essentially the difference between the actual value and the prediced value of the regression model. The residual section contains 5 values. A symmetrical distribution would be an indicator to answer how well the model fits the data. In this case the distribution of the residuals does appear to be somewhat symmetrical because the median is at 5.135. This means the model is slightly left-skewed. This tells us that our model is not predicting as well at the lower ranges as it does for the higher. 
+This came as a surprise to me, because when looking at the diagram I got the feeling that the upper range is less well represented. 
+
+#### Coefficient analysis
+* The extremely low p-value (< 2e-16) is marked with *** which is the best possible case. In this test the Null-Hypothesis is being investigated. In this case the Null-Hypothesis is that the battery pack size does NOT have a relationship with the range of an electric vehicle. Because of the perfect p-value the Null-Hypothesis can be discarded in this regression model.
+
+* The Estimate value for the Intercept is a bit of nonsense in this example because it means that an ev with a batterypack size of 0 has a range of 74.433 kilometers.
+
+* The Estimate value for the batterypack size variable on the other hand is representing a very important part of a linear model. The 3.9989 describe the slope of the graph. That means on average the model predicts per 1 KwH larger batterypack size an electric vehicle can go 3.99 km more.
+
+* From a mathematical standpoint looking at the formular for linear graphs f(x) = mx + b, then is the "m" described by the estimate for the batterypack size and the "b" is equal to the estimate value of the intercept.
+
+* The standard error of the Battery pack size is at 0.2022. This means that the previously established slope of the model with 3.9989 can deviate by 0.2022. In other words, it can be said that the range per added KwH of battery capacity vary by 0.2022 kilometers.
+
+* The t-value has to be as far away from 0 as possible. In this case it is relatively far away from zero with 19.776. This indicates that the Null-Hypothesis can be rejected and a relationship between range and battery capacity exists.
+
+#### Review of additional values
+* Residual standard error is an indicator of the quality of the linear model fit and in this case it is at 41.96. It simply describes the average amount that the data points deviate from the true regression line. 41.96 is not the best case but still in a acceptable distance.
+
+* For this regression 98 data points and two parameters (intercept and slope) were used. The degrees of freedom means that 88 out of the 98 data points went into the calculation and estimation of the parameters.
+
+* The Multiple R-squared value is at 81.63% which is a great result and means that this regression model can explain 81.63% of the given data set. This model is by far not under-fitting the data. If anything it is close to over-fitting the data.
+
+```{r}
+ par(mfrow=c(2,2))
+ plot(model)
+```
+
+Above are 4 plots of the simple linear regression model. Even though it has been made clear in the previous paragraph that this model still has issues and that there is room for improvement I want to go over the result and explain where the issues are and how they can be improved in later versions of the model:
+
+* The residuals vs. Fitted plots red line should be close to the perfect dotted grey line. But in this regression model it hints to an undiscovered curvilinear relationship, because the graph proceeds in a curve. Most likely this indicates a hidden quadratic relationship.
+
+* The Normal Q-Q Graph shows good results for the regression. Only small deviations are visible in the lower end of this model. This was already discovered at the review of the Residuals and only underlines the statement from above.
+
+* The scale vs Location graph also hints at an undiscovered quadratic relationship, because of the curvilinear behavior of the red line.
+  
+  
+# Improved regression model
+  
+From the ggplot above I can see that the simple linear model does fit the data perfectly, but a curvilinear, especially a quadratic method could be an even better fit for the given data:
+  
+```{r}
+  # Scatterplot with a quadratic geom smooth line
+  ggplot(ev, aes(x=Battery_Pack_Kwh, y=Range_Km)) + geom_point() + geom_smooth(method='auto', formula= y~x)
+```
+
+The scatter plot above is based on the same dataset as before, but the regression line has been modified. I assume the relatioship is not of the simple linear type, but more of a quadratic relationship.
+
+```{r}
+  cor(ev$Battery_Pack_Kwh, I(ev$Battery_Pack_Kwh^2))
+```
+This command checks for correlation of 2 variables, because multivariate models make the assumption that all values are independent from each other. This means we have a structural correlation type here. Because of this the data cannot be read afterwards from the model. But the model can still fit the data very well. It makes it just hard to analyse the model.
+
+```{r}
+  # Regression model for a quadratic relationship
+  modelSqared <- lm(Range_Km ~ Battery_Pack_Kwh + I(Battery_Pack_Kwh^2), data = ev)
+
+  summary(modelSqared)
+  
+  par(mfrow=c(2,2))
+  plot(modelSqared)
+```
+
+Because the this model is a multiple linear regression model the results cannot be interpreted anymore. This is the reason that the model results can only be compared on the numbers but not on the meaning:
+
+* In the Residual vs. Fitted plot can be seen big improvement. As expected, the curve has disappeared and now the red line proceeds very close to the optimal dotted line.
+
+* The Normal Q-Q graph has also improved in the lower range, but because of the quadratic modelling to upper range is now less well modeled. 
+
+* The estimate value for the intercept is still a bit of nonsense but its still better than the simple linear model. This quadratic model calculated -66.69 km of range when the battery capacity is at 0 %. This kind of makes sense, because every ev needs a battery size of at least a couple of KwH to able to drive for short ranges. This is much more realistic in this model, even though it still not perfect.
+
+# Which model is better?
+
+```{r}
+anova(model, modelSqared)
+```
+Because the result above is greater than 0.05 the squared model is not significantly better at capturing the data than the simpler model according to the anova test.
+
+# Consclusion
+The hypothesis was proven correct, and the data shows that the battery capacity is related to the range of electric vehicles. Even though the anova test does not support this, I believe that the data is fitted best by a curvilinear model. Also my main critics of the simple linear model were much improved with the quadratic model. This also mkaes me believe that the curvilinear model is the best fit for the given data.
