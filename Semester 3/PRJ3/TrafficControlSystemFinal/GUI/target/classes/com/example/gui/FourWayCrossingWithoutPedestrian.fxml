@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gui.FourWayCrossingWithoutPedestrian">
+  <children>
+    <MenuBar VBox.vgrow="NEVER">
+      <menus>
+        <Menu mnemonicParsing="false" text="File">
+          <items>
+            <MenuItem mnemonicParsing="false" text="New" />
+            <MenuItem mnemonicParsing="false" text="Open…" />
+            <Menu mnemonicParsing="false" text="Open Recent" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Close" />
+            <MenuItem mnemonicParsing="false" text="Save" />
+            <MenuItem mnemonicParsing="false" text="Save As…" />
+            <MenuItem mnemonicParsing="false" text="Revert" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Preferences…" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Quit" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Edit">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Undo" />
+            <MenuItem mnemonicParsing="false" text="Redo" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Cut" />
+            <MenuItem mnemonicParsing="false" text="Copy" />
+            <MenuItem mnemonicParsing="false" text="Paste" />
+            <MenuItem mnemonicParsing="false" text="Delete" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Select All" />
+            <MenuItem mnemonicParsing="false" text="Unselect All" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+          <items>
+            <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+      <children>
+            <ImageView fx:id="backgroundImage" fitHeight="366.0" fitWidth="433.0" layoutX="3.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/4waycrossingEW.png" />
+               </image>
+            </ImageView>
+            <Circle fx:id="NGREEN" fill="#2b2b2b" layoutX="96.0" layoutY="31.0" radius="17.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="NYELOW" fill="#2b2b2b" layoutX="96.0" layoutY="65.0" radius="17.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="NRED" fill="#ff0004" layoutX="96.0" layoutY="99.0" radius="17.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="SRED" fill="#ff0004" layoutX="284.0" layoutY="274.0" radius="17.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="SYELLOW" fill="#2b2b2b" layoutX="284.0" layoutY="308.0" radius="17.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="SGREEN" fill="#2b2b2b" layoutX="284.0" layoutY="342.0" radius="17.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="WYELLOW" fill="#2b2b2b" layoutX="55.0" layoutY="252.0" radius="17.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="WRED" fill="#2b2b2b" layoutX="89.0" layoutY="252.0" radius="17.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="WGREEN" fill="GREEN" layoutX="20.0" layoutY="252.0" radius="17.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="OYELLOW" fill="#2b2b2b" layoutX="318.0" layoutY="126.0" radius="17.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="OGREEN" fill="GREEN" layoutX="352.0" layoutY="126.0" radius="17.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="ORED" fill="#2b2b2b" layoutX="283.0" layoutY="126.0" radius="17.0" stroke="BLACK" strokeType="INSIDE" />
+          <Button fx:id="emergency" layoutX="417.0" layoutY="166.0" mnemonicParsing="false" onAction="#setEmergency" prefHeight="26.0" prefWidth="178.0" text="emergency" />
+          <Button fx:id="nightmode" layoutX="417.0" layoutY="128.0" mnemonicParsing="false" onAction="#setNightmode" prefHeight="26.0" prefWidth="178.0" text="nightmode" />
+          <Button fx:id="start" layoutX="417.0" layoutY="207.0" mnemonicParsing="false" onAction="#start" prefHeight="77.0" prefWidth="178.0" text="start" />
+          <Button fx:id="home" layoutX="533.0" layoutY="294.0" mnemonicParsing="false" onAction="#goHome" prefHeight="56.0" prefWidth="61.0" text="Home" />
+          <Button fx:id="GermanBehaviourButton" layoutX="417.0" layoutY="72.0" mnemonicParsing="false" onAction="#setGermanBehaviour" prefHeight="26.0" prefWidth="178.0" text="German" />
+          <Button fx:id="DutchBehaviourButton" layoutX="417.0" layoutY="36.0" mnemonicParsing="false" onAction="#setDutchBehaviour" prefHeight="26.0" prefWidth="178.0" text="Dutch" />
+          <Label layoutX="417.0" layoutY="9.0" text="Set the behaviour here:" />
+          <Label layoutX="417.0" layoutY="104.0" text="Set the modes here:" />
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>

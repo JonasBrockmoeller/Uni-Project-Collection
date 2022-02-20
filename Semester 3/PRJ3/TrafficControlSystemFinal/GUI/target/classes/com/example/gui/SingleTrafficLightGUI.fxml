@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gui.CarLightController">
+   <children>
+      <ImageView fitHeight="394.0" fitWidth="379.0" layoutX="6.0">
+         <image>
+            <Image url="@Images/SimpleTrafficLight.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="emergency" layoutX="385.0" layoutY="187.0" mnemonicParsing="false" onAction="#setEmergency" prefHeight="26.0" prefWidth="178.0" text="emergency" />
+      <Button fx:id="nightmode" layoutX="385.0" layoutY="149.0" mnemonicParsing="false" onAction="#setNightmode" prefHeight="26.0" prefWidth="178.0" text="nightmode" />
+      <Button fx:id="start" layoutX="385.0" layoutY="228.0" mnemonicParsing="false" onAction="#start" prefHeight="77.0" prefWidth="178.0" text="start" />
+      <Button fx:id="stop" layoutX="385.0" layoutY="315.0" mnemonicParsing="false" onAction="#stop" prefHeight="56.0" prefWidth="114.0" text="stop" />
+      <Button fx:id="home" layoutX="501.0" layoutY="315.0" mnemonicParsing="false" onAction="#goHome" prefHeight="56.0" prefWidth="61.0" text="Home" />
+      <Button fx:id="GermanBehaviourButton" layoutX="385.0" layoutY="93.0" mnemonicParsing="false" onAction="#setGermanBehaviour" prefHeight="26.0" prefWidth="178.0" text="German" />
+      <Button fx:id="DutchBehaviourButton" layoutX="385.0" layoutY="57.0" mnemonicParsing="false" onAction="#setDutchBehaviour" prefHeight="26.0" prefWidth="178.0" text="Dutch" />
+      <Label layoutX="385.0" layoutY="30.0" text="Set the behaviour here:" />
+      <Label layoutX="385.0" layoutY="125.0" text="Set the modes here:" />
+      <Circle fx:id="Red" fill="#ff0004" layoutX="196.0" layoutY="135.0" radius="31.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="Yellow" fill="#2b2b2b" layoutX="196.0" layoutY="200.0" radius="31.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="Green" fill="#2b2b2b" layoutX="196.0" layoutY="268.0" radius="31.0" stroke="BLACK" strokeType="INSIDE" />
+   </children>
+</Pane>
