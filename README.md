@@ -1,6 +1,8 @@
 # Fontys
 This repo contains most of the work I have done in University:
 
+![alt text](https://github.com/JonasBrockmoeller/Fontys/blob/main/curriculum.jpg)
+
 Semester 1: <br/>
 [PRJ1](https://github.com/FontysVenlo/prj1-2020-group-prj1-2020-16)
 
