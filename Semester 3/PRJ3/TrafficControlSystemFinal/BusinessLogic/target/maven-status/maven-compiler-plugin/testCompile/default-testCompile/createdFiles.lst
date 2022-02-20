@@ -1,0 +1,8 @@
+TrafficLight/BehaviourImplementations/CarBehaviourTest.class
+TrafficLight/BehaviourImplementations/PedestrainBehaviourTest.class
+TrafficLight/Entities/CarLightTest.class
+TrafficLight/Entities/CrossingTest.class
+TrafficLight/Entities/PedestrianLightTest.class
+FactoryTest.class
+TrafficLight/Command/FourWayCrossingCommandTest.class
+TrafficLight/Command/SimpleCrossingCommandTest.class
