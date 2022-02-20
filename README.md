@@ -1,4 +1,4 @@
-# Fontys
+# Collection from Fontys University
 This repo contains most of the work I have done in University:
 
 ![alt text](https://github.com/JonasBrockmoeller/Fontys/blob/main/curriculum.jpg)
