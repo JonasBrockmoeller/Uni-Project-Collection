@@ -1,0 +1,205 @@
+@font-face { font-family: Dosis; src: url('../res/Dosis-Regular.ttf'); } 
+@font-face { font-family: Dosis; font-weight: 800; src: url('../res/Dosis-ExtraBold.ttf'); } 
+:root {
+  font-family: 'Dosis';
+}
+p {
+  font-family: 'Dosis';
+}
+body {
+    background-color: #333333;
+    color:#B79430;
+    font-family: sans-serif;
+    text-align: center;
+}
+
+h1{
+    font-size: 30pt;
+    text-align: center;
+    margin-left: 50%;
+    margin-right: 5%;
+}
+
+/* ^ credit card form card style*/
+.CreditCard{
+    border-color: black;
+    border-width: 3pt;
+    margin: 10pt;
+    margin-left: 50%;
+    margin-right: 5%;
+    padding: 10pt;
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+    opacity: 0.8;
+    background-color: #444;
+    //max-width: 30%;
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+} /*Color gradient animation*/
+
+/* ^ credit card confirm button*/
+.confimbtn {
+    background-color: #333333;
+    color: white;
+    text-align: center;
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+    padding: 20px 26px;
+    border: none;
+    cursor: pointer;
+    width: 35%;
+    opacity: 0.9;
+    font: bold;
+}
+
+.confimbtn:hover {
+    opacity:1;
+}
+
+/* ^ credit card form*/
+.form-control {
+    padding: 3pt;
+    margin: 3pt;
+    width: 100%;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    height: 25pt;
+    border: 1px;
+    border-style: solid;
+}
+
+
+.control_numberfield1 {
+    padding: 3pt;
+    margin: 3pt;
+    width: 47%;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    height: 25pt;
+    border: 1px;
+    border-style: solid;
+}
+.control_numberfield2 {
+    padding: 3pt;
+    margin: 3pt;
+    width: 47%;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    height: 25pt;
+    border: 1px;
+    border-style: solid;
+}
+
+/* ^ table with selected product and price*/
+.invoice-box table tr.heading td {
+    border-bottom: 1px solid #ddd;
+    font-weight: bold;
+    font-size: 20pt;
+    padding: 3pt;
+}
+.invoice-box table tr.details td {
+    padding-bottom: 20px;
+    font-size: 20pt;
+    padding: 3pt;
+}
+.invoice-box table tr.item td{
+    border-bottom: 1px solid #eee;
+    font-size: 20pt;
+    padding: 3pt;
+}
+.invoice-box table tr.total td:nth-child(2) {
+    border-top: 2px solid #eee;
+    font-weight: bold;
+    font-size: 20pt;
+    text-align: right;
+    padding: 3pt;
+}
+.invoice-box{
+    border-color: black;
+    border-width: 3pt;
+    margin: 10pt;
+    padding: 10pt;
+    margin-left: 52%;
+    font-size: 20pt;
+    background-color: #333333;
+}
+
+/* ^ visa or master card selector*/
+.cc-selector input{
+    margin:0;padding:0;
+    -webkit-appearance:none;/* ^ make radio buttons disapper next to the card                      images*/
+       -moz-appearance:none;/* ^ make radio buttons disapper next to the card images*/
+            appearance:none; /* make radio buttons disapper next to the card images*/
+}
+/* ^ make radio buttons disapper next to the card images*/
+
+.visa{background-image:url(http://i.imgur.com/lXzJ1eB.png);}
+.mastercard{background-image:url(http://i.imgur.com/SJbRQF7.png);}
+/* ^ setting images on radio button*/
+
+.cc-selector input:active +.drinkcard-cc{opacity: .5;}
+/* ^ make all radio buttons a little bit see through / darker */
+
+.cc-selector input:checked +.drinkcard-cc{
+    -webkit-filter: none;
+    -moz-filter: none;
+    filter: none;
+}
+/* ^ remove all filter from selected card*/
+
+.drinkcard-cc{
+    cursor:pointer;
+    background-size:contain;
+    background-repeat:no-repeat;
+    display:inline-block;
+    width:100px;height:70px;
+    -webkit-filter: brightness(1.8) grayscale(1) opacity(.7);
+    -moz-filter: brightness(1.8) grayscale(1) opacity(.7);
+    filter: brightness(1.8) grayscale(1) opacity(.7);
+}
+
+.drinkcard-cc:hover{
+    -webkit-filter: brightness(1.2) grayscale(.5) opacity(.9);
+    -moz-filter: brightness(1.2) grayscale(.5) opacity(.9);
+    filter: brightness(1.2) grayscale(.5) opacity(.9);
+}/* ^ highlight image that the mouse hovers over*/
+
+hr{
+    style="height:2px;border-width:0;color:gray;background-color:gray"
+}
+
+.paypalTable{
+    margin:3pt;
+    padding: 3pt;
+    margin-left:35%;
+    margin-right:35%;
+}
+
+.asidePic{
+    width: 450pt;
+    height: 565pt;
+    float: left;
+}

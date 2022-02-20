@@ -1,0 +1,399 @@
+@font-face { font-family: Dosis; src: url('../res/Dosis-Regular.ttf'); }
+@font-face { font-family: Dosis; font-weight: 800; src: url('../res/Dosis-ExtraBold.ttf'); }
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap');
+:root {
+  font-family: 'Roboto', sans-serif;
+}
+p {
+  font-family: 'Roboto', sans-serif;
+}
+body {
+  background-color: #333333;
+  color:#9c9279;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+html{
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 58%;
+  margin-left: 30%;
+  margin-right: 40%;
+}
+
+#main-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+#content {
+  flex: 1;
+}
+h1 {
+  color: #b79600;
+  text-align: center;
+  margin-top:-200pt;
+  max-width:50%;
+  margin-left:30%;
+}
+h2 {
+  text-align: center;
+    color: #06859e;
+    font-family: 'Sofia';
+}
+h3 {
+  color: #7d2403;
+}
+h4 {
+  color: #c17177;
+}
+.sectionHead{
+    background: #b79600;
+    color:#7d2403;
+    border: 1pt solid #181511;
+    padding:10pt;
+    border-radius: 25px 0 0 25px;
+    text-align: center;
+    width: 40%;
+}
+.kon {
+  background-color: #181511;
+  display:flex;
+  width: 50%;
+  min-width: 350pt;
+  float:right;
+  margin-bottom: 10pt;
+  border-radius: 25px 25px 5px 25px;
+  position:relative;
+  right:20%;
+  top:10%;
+}
+th{
+    background-color: #b79600;
+    padding:10pt;
+    padding-right: 20pt;
+    padding-left: 20pt;
+     color: #7d2403;
+border: 2pt solid black;
+border-collapse: collapse;
+}
+td{
+    background-color: #333333;
+    padding:10pt;
+    padding-right: 20pt;
+     color: #c17177;
+     font-weight:bold;
+     text-align: center;
+     margin-bottom: 10pt;
+border: 2pt solid black;
+border-collapse: collapse;
+}
+.photo{
+    max-width: 50pt;
+    max-height: 50pt;
+}
+header {
+    background-color: #181511;
+    border: 1pt solid #06859e;
+    height:110pt;
+    width:100%;
+	box-sizing: border-box;
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+.headP{
+    width:15%;
+    height:auto;
+    float:left;
+    max-height:125pt;
+}
+.headPr{
+    width:8%;
+    height:auto;
+    float:right;
+    padding:10pt;
+    max-height:125pt;
+}
+.search {
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+
+.searchTerm {
+  width: 100%;
+  border: 3px solid #06859e;
+  border-right: none;
+  padding: 5px;
+  height: 40px;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+  color: #b79600;
+  background-color: #333333;
+
+}
+.searchTerm:focus{
+  color: #b79600;
+  background-color:#333333;
+  border: 3px solid #b79600;
+}
+.searchTerm:hover{
+  color: #b79600;
+  background-color:#333333;
+  border: 3px solid #b79600;
+}
+.searchButton {
+  width: 80px;
+  height: 56px;
+  border: 1px solid #06859e;
+  background: #06859e;
+  text-align: center;
+  color: #333333;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 20px;
+}
+.searchButton:hover{
+    background: #b79600;
+    border: 1px solid #b79600;
+    color: #333333;
+}
+.loginButton{
+    width: 10%;
+  height: 56px;
+  border: 1px solid #06859e;
+  background: #333333;
+  text-align: center;
+  color: #b79600;
+  border-radius: 5px 5px 5px 5px;
+  margin: 5pt;
+  cursor: pointer;
+  font-size: 20px;
+  margin-top: 20pt;
+  margin-bottom: 10pt;
+  float:right;
+
+}
+.loginButton:hover{
+    background: #06859e;
+    color: #333333;
+}
+.button{
+    width: 90%;
+  height: 56px;
+  border: 1px solid #06859e;
+  background: #333333;
+  text-align: center;
+  color: #b79600;
+  border-radius: 5px 5px 5px 5px;
+  margin: 5pt;
+  cursor: pointer;
+  font-size: 20px;
+  margin-top: 10pt;
+  margin-bottom: 10pt;
+}
+.button:hover{
+    background: #06859e;
+    color: #333333;
+}
+.footercolumn{
+  float:left;
+  width:33.333%;
+  text-align:center;
+}
+.footb{
+  position:relative;
+  text-align: center;
+  color: #b79600;
+  cursor: pointer;
+  font-size: 20px;
+  display: inline-block;
+  text-decoration: none;
+}
+.footb:hover{
+  color: #b73a00;
+}
+a img:last-child {
+  display: none;
+}
+a:hover img:last-child {
+  display: block;
+}
+a:hover img:first-child {
+  display: none;
+}
+hr {
+  border: 2pt solid #C36F76;
+}
+.wrap{
+  width: 40%;
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+footer {
+  background-color: #181511;
+  border: 1pt solid #06859e;
+  border-bottom-style:none;
+  position:relative;
+  bottom:0;
+  width: 100%;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  display:flex;
+  margin-top: 40pt;
+  max-height: 70pt;
+  box-sizing: border-box;
+  padding-bottom:10pt;
+}
+img {
+  display: block;
+  width: 50%;
+  height: 50%;
+}
+aside {
+  width: 15%;
+  height:auto;
+  padding-right: 15pt;
+  padding-left:15pt;
+  text-align: left;
+  background-color: #181511;
+  border: 1pt solid #06859e;
+  border-bottom-right-radius: 25px;
+  border-bottom-left-radius: 25px;
+  float:left;
+  margin-right:10pt;
+  margin-bottom: 100pt;
+}
+aside{
+    margin-right: 60%;
+}
+.showmore{
+    background-color: black;
+	color:#9c9279;
+}
+.showmore:hover{
+    background-color: #06859e;
+	color:black;
+}
+.foot{
+    position: absolute;
+    background-color: white;
+    bottom:0;
+}
+
+.dropbtn {
+  background-color: #333333;
+  color: #c17177;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #c17177;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {background-color: #c17177;color:#333333;}
+
+
+
+
+/* Full-width input fields */
+input[type=text]:not(.searchTerm), input[type=password], input[type=email], input[type=textarea] {
+  width: 55%;
+  height: 80%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+  display: flex;
+  align-items: center;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+input[type=text]:not(.searchTerm):focus, input[type=password]:focus, input[type=email]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Overwrite default styles of hr */
+hr {
+  border: 1px solid #C36F76;
+  margin-bottom: 25px;
+}
+
+/* Set a style for the submit/register button */
+.registerbtn {
+  background-color: #00859A;
+  color: white;
+  border-top-right-radius: 25px;
+  border-top-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  border-bottom-left-radius: 25px;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.asidePic{
+  width: 350pt;
+  height: 400pt;
+  float: left;
+}
+
+.registerbtn:hover {
+  opacity:1;
+}
+
+/* Add a blue text color to links */
+a {
+  color: dodgerblue;
+}
+
+/* Set a gray background color and center the text of the "sign in" section */
+.signin {
+  background-color: #333333;
+  text-align: center;
+}

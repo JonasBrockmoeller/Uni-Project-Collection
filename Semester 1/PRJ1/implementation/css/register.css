@@ -1,0 +1,120 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/*
+    Created on : 3 Nov 2020, 11:30:47
+    Author     : jonas
+*/
+
+@font-face { font-family: Dosis; src: url('../res/Dosis-Regular.ttf'); }
+@font-face { font-family: Dosis; font-weight: 800; src: url('../res/Dosis-ExtraBold.ttf'); }
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap');
+:root {
+    font-family: 'Roboto', sans-serif;
+}
+p {
+    font-family: 'Roboto', sans-serif;
+}
+
+/* position containers */
+.container {
+  width: 50%;
+  margin-left: 40%;
+  margin-right: 40%;
+}
+
+.container signin{
+  padding: 16px;
+  margin-left: 25%;
+}
+
+.headP {
+  width: 150pt;
+  height: 75pt;
+  float: right;
+}
+
+aside{
+    margin-right: 60%;
+}
+
+.asidePic{
+  width: 350pt;
+  height: 400pt;
+  float: left;
+}
+
+body {
+  background-color: #333333;
+  color:#B79430;
+  font-family: sans-serif;
+}
+
+h1{
+    font-size: 30pt;
+}
+
+/* Full-width input fields */
+input[type=text], input[type=password], input[type=email], input[type=textarea] {
+  width: 95%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+  display: flex;
+  align-items: center;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Overwrite default styles of hr */
+hr {
+  border: 1px solid #C36F76;
+  margin-bottom: 25px;
+}
+
+/* Set a style for the submit/register button */
+.registerbtn {
+  background-color: #00859A;
+  color: white;
+  border-top-right-radius: 25px;
+  border-top-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  border-bottom-left-radius: 25px;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.registerbtn:hover {
+  opacity:1;
+}
+
+/* Add a blue text color to links */
+a {
+  color: dodgerblue;
+}
+
+/* Set a gray background color and center the text of the "sign in" section */
+.signin {
+  background-color: #333333;
+  text-align: center;
+}
+
+.group_pic{
+    max-height: 60%;
+    max-width: 100%;
+}

@@ -1,0 +1,228 @@
+@font-face { font-family: Dosis; src: url('../res/Dosis-Regular.ttf'); }
+@font-face { font-family: Dosis; font-weight: 800; src: url('../res/Dosis-ExtraBold.ttf'); }
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap');
+:root {
+  font-family: 'Roboto', sans-serif;
+}
+p {
+  font-family: 'Roboto', sans-serif;
+}
+body {
+  background-color: #333333;
+  color:#9c9279;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+html{
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+#main-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 50%;
+}
+#content {
+  flex: 1;
+}
+h1 {
+  color: #b79600;
+  text-align: center;
+  margin-top:-200pt;
+  max-width:50%;
+  margin-left:30%;
+}
+h2 {
+  text-align: center;
+    color: #06859e;
+    font-family: 'Sofia';
+}
+h3 {
+  color: #7d2403;
+}
+h4 {
+  color: #c17177;
+}
+.sectionHead{
+    background: #b79600;
+    color:#7d2403;
+    border: 1pt solid #181511;
+    padding:10pt;
+    border-radius: 0 0 0 0;
+    text-align: center;
+    width: 40%;
+}
+.kon {
+  background-color: #181511;
+  display:flex;
+  width: 50%;
+  min-width: 350pt;
+  float:right;
+  margin-bottom: 10pt;
+  border-radius: 0 0 0 0;
+  position:relative;
+  right:20%;
+  top:10%;
+}
+th{
+    background-color: #b79600;
+    padding:10pt;
+    padding-right: 20pt;
+    padding-left: 20pt;
+     color: #7d2403;
+border: 2pt solid black;
+border-collapse: collapse;
+}
+td{
+    background-color: #333333;
+    padding:10pt;
+    padding-right: 20pt;
+     color: #c17177;
+     font-weight:bold;
+     text-align: center;
+     margin-bottom: 10pt;
+border: 2pt solid black;
+border-collapse: collapse;
+}
+.photo{
+    max-width: 50pt;
+    max-height: 50pt;
+}
+header {
+	background: linear-gradient(45deg, #181511, #333333);
+    background-color: #181511;
+    border: 1pt solid #06859e;
+    height:160pt;
+    width:100%;
+	border-radius: 0 0 100pt 100pt;
+	box-sizing: border-box;
+}
+.headP{
+    width:22%;
+    height:auto;
+    float:left;
+}
+.headPr{
+    width:8%;
+    height:auto;
+    float:right;
+    padding:10pt;
+    max-height:125pt;
+}
+.search {
+  width: 25%;
+  position: relative;
+  display: flex;
+  float:left;
+  margin-left:10pt;
+}
+
+.searchTerm {
+  width: 100%;
+  border: 3px solid #06859e;
+  border-right: none;
+  padding: 5px;
+  height: 10pt;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+  color: #b79600;
+  background-color: #333333;
+  
+  
+}
+.searchTerm:focus{
+  color: #b79600;
+  background-color:#333333;
+  border: 3px solid #b79600;
+}
+.searchTerm:hover{
+  color: #b79600;
+  background-color:#333333;
+  border: 3px solid #b79600;
+}
+.sch{
+	 border: 5pt solid #181511;
+	background-color:#b79600;
+    color:#333333;
+	
+	cursor: pointer;font-size: 15pt;width: 120pt;height: 65pt;border-radius: 120pt 120pt 120pt 120pt;position:absolute;left:25%;bottom:25%;
+}
+.sch:hover{
+   
+	
+	background-color: #181511;
+	border: 5pt solid #b79600;
+    color: #b79600;
+}
+.getb{
+	border: 15pt solid #333333;
+	color:#333333;
+	background-color: #b79600;
+	height:120pt;width:35%;position:absolute;left:32.5%;margin-top:50pt;border-radius: 120pt 120pt 120pt 120pt;font-size:65pt;
+}
+.getb:hover{
+    background-color: #181511;
+	border: 15pt solid #b79600;
+    color: #b79600;
+}
+.footb{
+  
+  min-width: 30%;
+  max-height: 40pt;
+  border: 1px solid #06859e;
+  background: #333333;
+  text-align: center;
+  color: #b79600;
+  border-radius: 5px 5px 5px 5px;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top:5pt;
+  margin-bottom:5pt;
+  cursor: pointer;
+  font-size: 20px;
+}
+a img:last-child {
+  display: none;  
+}
+a:hover img:last-child {
+  display: block;  
+}
+a:hover img:first-child {
+  display: none;  
+}
+hr {
+  border: 2pt solid #C36F76;
+}
+.footb:hover{
+    background: #06859e;
+    color: #333333;
+}
+.wrap{
+  width: 40%;
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+}
+footer {
+    background-color: #181511;
+    border: 1pt solid #06859e;
+    position:absolute;
+    bottom:0;
+    width: 100%;
+    display:flex;
+    margin-top: 20pt;
+	box-sizing: border-box;
+}
+img {
+  
+}
+
+.foot{
+    position: absolute;
+    background-color: white;
+    bottom:0;
+}
+

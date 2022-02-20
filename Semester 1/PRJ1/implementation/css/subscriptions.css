@@ -1,0 +1,94 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/*
+    Created on : 3 Nov 2020, 11:30:47
+    Author     : jonas
+*/
+
+@font-face { font-family: Dosis; src: url('../res/Dosis-Regular.ttf'); } 
+@font-face { font-family: Dosis; font-weight: 800; src: url('../res/Dosis-ExtraBold.ttf'); } 
+:root {
+  font-family: 'Dosis';
+}
+p {
+  font-family: 'Dosis';
+}
+
+body {
+  background-color: #333333;
+  color:#B79430;
+  font-family: sans-serif;
+  text-align: center;
+  overflow: hidden
+}
+
+h1{
+    font-size: 30pt;
+}
+
+#cards {
+    display : inline-block;
+    margin-left: 10pt;
+    margin-right: 10pt;
+    margin-top: 10pt;
+    padding-top: 10pt;
+    padding-left: 10pt;
+    padding-right: 10pt;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border: none;
+}
+
+.card_visitor {
+    transition: transform .2s; /* Animation */
+}
+
+.card_visitor:hover {
+    transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
+.card_listener {
+    transition: transform .2s; /* Animation */
+}
+
+.card_listener:hover {
+    transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
+.card_premium_listener {
+    transition: transform .2s; /* Animation */
+}
+
+.card_premium_listener:hover {
+    transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
+.card_creator {
+    transition: transform .2s; /* Animation */
+}
+
+.card_creator:hover {
+    transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
+button{
+    width: 300px;
+    height: 50px;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border: 1pt solid #FFFFFF;
+    background-color: #333333;
+    color:#B79430;
+    font-size: 130%;
+}
+
+button:hover {
+    background-color: #4d4d4d;
+}
